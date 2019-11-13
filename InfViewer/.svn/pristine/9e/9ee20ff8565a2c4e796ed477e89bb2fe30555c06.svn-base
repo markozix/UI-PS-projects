@@ -1,0 +1,49 @@
+package main;
+
+import java.awt.Dimension;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+
+public class ToolBarIznadTabele extends JToolBar {
+
+	
+	
+	public ToolBarIznadTabele() {
+
+	
+	JLabel blockFactor = new JLabel("f(block factor): ");
+	JTextField blockTf = new JTextField();
+	//podesiti tf duzinu
+	blockTf.setMaximumSize(new Dimension(50, 25));
+	JButton changeF = new JButton("Change f");
+	JButton btnFetch = new JButton("Fetch next block");
+	JButton dodaj = new JButton("Add");
+	JButton izbrisi = new JButton("Delete");
+	JButton update = new JButton("Update");
+	JButton pretrazi = new JButton("Search");
+	
+	add(blockFactor);
+	add(blockTf);
+	add(changeF);
+	addSeparator();
+	add(btnFetch);
+	add(dodaj);
+	add(izbrisi);
+	add(update);
+	add(pretrazi);
+	
+	setFloatable(false);
+	
+	
+	
+	
+	
+	
+	}
+	
+	
+	
+}

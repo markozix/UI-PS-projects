@@ -1,0 +1,62 @@
+package controller;
+
+import java.awt.Dimension;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import main.MainFrame;
+import modeli.Atribut;
+import modeli.Entitet;
+import modeli.InformacioniResurs;
+import modeli.Paket;
+import modeli.Relacija;
+import modeli.Tabela;
+
+public class OsveziRelacije implements ChangeListener {
+
+	@Override
+	public void stateChanged(ChangeEvent arg0) {
+		// ocisti prethodne tabove da ne bi bilo duplikata
+		MainFrame.getInstance().getDonjiTabovi().removeAll();
+
+		// nalazi odgovarajuce entitete koje treba iscrtati u donjoj tabeli
+		String odabrani = MainFrame.getInstance().getGornjiTabovi()
+				.getTitleAt(MainFrame.getInstance().getGornjiTabovi().getSelectedIndex());
+		Entitet trenutni = null;
+		Paket pp = (Paket) MainFrame.getInstance().getTree().getSelectionPath().getPathComponent(2);
+		for (Entitet e : pp.getEntiteti()) {
+			if (e.getName().equals(odabrani)) {
+				trenutni = e;
+				break;
+			}
+		}
+		for (Relacija rel : trenutni.getRelacije()) {
+			for (Entitet ent : pp.getEntiteti()) {
+				if (rel.getEntitet().equals(ent.getName())) {
+					// donja tabela
+					int t = ent.getChildCount();
+					Object[] lista = new Object[t];
+					for (int k = 0; k < t; k++) {
+						Atribut aa = (Atribut) ent.getChildAt(k);
+						String s = aa.getName();
+						Object p = s;
+						lista[k] = p;
+					}
+					JTable tabela = new JTable(new Tabela(null, lista));
+					tabela.getTableHeader();
+					JScrollPane scroll = new JScrollPane(tabela);
+					Dimension screenSize = MainFrame.getInstance().getGornji().getSize();
+					scroll.setPreferredSize(screenSize);
+					scroll.setMaximumSize(screenSize);
+					scroll.setMinimumSize(screenSize);
+					tabela.setFillsViewportHeight(true);
+					MainFrame.getInstance().getDonjiTabovi().addTab(ent.getName(), scroll);
+				}
+			}
+		}
+	}
+
+}

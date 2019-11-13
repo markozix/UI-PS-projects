@@ -1,0 +1,7 @@
+{
+   "name":
+   "isKey":
+   "length":
+   "type":
+   "required":
+}

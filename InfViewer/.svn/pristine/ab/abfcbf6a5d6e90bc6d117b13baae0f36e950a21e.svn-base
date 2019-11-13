@@ -1,0 +1,56 @@
+package metaSema;
+
+import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JToolBar;
+
+public class MetaMenuBar extends JMenuBar {
+
+	public MetaMenuBar() {
+		JMenu add = new JMenu("Add");
+		JMenu remove = new JMenu("Remove");
+		JMenu update = new JMenu("Update");
+		
+		add(add);
+		add(remove);
+		add(update);
+		
+		JMenuItem addInf = new JMenuItem("InfResurs");
+		addInf.addActionListener(new DodajInfResurs());
+		JMenuItem addEntitet = new JMenuItem("Entitet");
+		addEntitet.addActionListener(new DodajEntitet());
+		JMenuItem addAtribut = new JMenuItem("Atribut");
+		addAtribut.addActionListener(new DodajAtribut());
+		JMenuItem addRelacija = new JMenuItem("Relacija");
+		addRelacija.addActionListener(new DodajRelacija());
+		add.add(addInf);
+		add.add(addEntitet);
+		add.add(addAtribut);
+		add.add(addRelacija);
+		
+		JMenuItem removeEntitet = new JMenuItem("Entitet");
+		removeEntitet.addActionListener(new RemoveEntitet());
+		JMenuItem removeAtribut = new JMenuItem("Atribut");
+		removeAtribut.addActionListener(new RemoveAtribut());
+		JMenuItem removeRelacija = new JMenuItem("Relacija");
+		removeRelacija.addActionListener(new RemoveRelacija());
+		remove.add(removeEntitet);
+		remove.add(removeAtribut);
+		remove.add(removeRelacija);
+		
+		JMenuItem updateInf = new JMenuItem("InfResurs");
+		updateInf.addActionListener(new UpdateResurs());
+		JMenuItem updateEntitet = new JMenuItem("Entitet");
+		updateEntitet.addActionListener(new UpdateEntitet());
+		JMenuItem updateAtribut = new JMenuItem("Atribut");
+		updateAtribut.addActionListener(new UpdateAtribut());
+		JMenuItem updateRelacija = new JMenuItem("Relacija");
+		updateRelacija.addActionListener(new UpdateRelacija());
+		update.add(updateInf);
+		update.add(updateEntitet);
+		update.add(updateAtribut);
+		update.add(updateRelacija);
+	}
+}

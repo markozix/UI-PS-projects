@@ -1,0 +1,23 @@
+package state;
+
+public class AddState extends State {
+
+	@Override
+	public void selectedField() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pressButton() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pressButtonMerge() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

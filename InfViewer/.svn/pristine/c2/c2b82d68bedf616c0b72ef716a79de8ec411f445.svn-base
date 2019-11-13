@@ -1,0 +1,25 @@
+package controller.state;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+
+import javax.swing.JDialog;
+
+public class SaveTabela implements ActionListener {
+
+	private ArrayList<Object[]> lista;
+	private JDialog dialog;
+	
+	public SaveTabela(ArrayList<Object[]> lista, JDialog dialog) {
+		this.lista = lista;
+		this.dialog = dialog;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		dialog.dispatchEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSING));
+	}
+
+}

@@ -1,0 +1,14 @@
+package state;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+
+public class DeleteState extends State {
+
+	@Override
+	public void pressButton(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

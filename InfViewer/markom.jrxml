@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="markom" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9328b6cb-f4f0-4a61-9f7c-274b4b21f2f8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="mmm"/>
+	<parameter name="markoParam1" class="java.lang.String"/>
+	<parameter name="markoParam2" class="java.lang.String"/>
+	<parameter name="markoParam3" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT dbo."DRAZAVA"."DR_NAZIV",
+	count(*) AS brR
+FROM dbo."DRAZAVA" 
+	inner join dbo."REGIONI" ON 
+	 dbo."DRAZAVA"."DR_IDENTIFIKATOR" = dbo."REGIONI"."DR_IDENTIFIKATOR" 
+WHERE 
+	 dbo."DRAZAVA"."DR_IDENTIFIKATOR" = $P{markoParam1} 
+	 OR dbo."DRAZAVA"."DR_IDENTIFIKATOR"= $P{markoParam2} 
+	 OR dbo."DRAZAVA"."DR_IDENTIFIKATOR" = $P{markoParam3} 
+GROUP BY dbo."DRAZAVA"."DR_NAZIV"]]>
+	</queryString>
+	<field name="DR_NAZIV" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DR_NAZIV"/>
+	</field>
+	<field name="brR" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="brR"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="230" y="24" width="100" height="30" uuid="06515f9c-e4a7-43c2-bc7a-4a8893e6971b"/>
+				<textFieldExpression><![CDATA["MATOVICEV REPORT"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="10" width="100" height="30" uuid="fc104614-4563-430b-bd9d-5ebca37e8121">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="44a2a0b8-1c19-45db-ae49-bcfebcd3ccf2"/>
+				</reportElement>
+				<text><![CDATA[DR_NAZIV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="10" width="100" height="30" uuid="8f5f21ae-cdab-48d7-ba0c-00075c36135d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4c751dd6-9d94-428b-9ae6-5ebef9230607"/>
+				</reportElement>
+				<text><![CDATA[brR]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="47" width="100" height="30" uuid="546fef6f-dbdf-4ac5-b5f6-e32ca222ec0f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="44a2a0b8-1c19-45db-ae49-bcfebcd3ccf2"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{DR_NAZIV}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="47" width="100" height="30" uuid="690cffc0-10fe-462d-8123-7cf74b3debb1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4c751dd6-9d94-428b-9ae6-5ebef9230607"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{brR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="105" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="60" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="80" y="0" width="100" height="30" uuid="4e68cbd9-100c-4512-b7f2-7d378377f424"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="100" height="30" uuid="a2c0d124-5732-407d-b753-429ff71dfed0"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

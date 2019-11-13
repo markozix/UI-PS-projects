@@ -1,0 +1,14 @@
+package metaSema;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class OtvoriEditor implements ActionListener {
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		EditorMetaSeme ms = EditorMetaSeme.getInstance();
+		ms.show();
+	}
+
+}

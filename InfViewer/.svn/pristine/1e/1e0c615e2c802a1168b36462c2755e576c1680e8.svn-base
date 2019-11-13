@@ -1,0 +1,13 @@
+package metaSema;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class UpdateResurs implements ActionListener {
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		UpdateIzaberiResurs res = new UpdateIzaberiResurs();
+	}
+
+}

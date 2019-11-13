@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Bogdan" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7045471a-ab51-4866-adac-7a24bf8d7c31">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Studiranje"/>
+	<parameter name="BakiParam" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[select REGISTAR_NEKRETNINA.NIM_OPIS, REGISTAR_NEKRETNINA.NIM_ADRESA, NASELJENO_MESTO.NM_NAZIV 
+from REGISTAR_NEKRETNINA
+inner join NASELJENO_MESTO on NASELJENO_MESTO.DR_IDENTIFIKATOR = REGISTAR_NEKRETNINA.DR_IDENTIFIKATOR 
+and NASELJENO_MESTO.NM_IDENTIFIKATOR = REGISTAR_NEKRETNINA.NM_IDENTIFIKATOR 
+where PS_IDENTIFIKATOR =  $P{BakiParam}]]>
+	</queryString>
+	<field name="NIM_OPIS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NIM_OPIS"/>
+	</field>
+	<field name="NIM_ADRESA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NIM_ADRESA"/>
+	</field>
+	<field name="NM_NAZIV" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NM_NAZIV"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="227" y="20" width="100" height="30" uuid="d6be4403-992c-4ab6-94b7-8af27960b053"/>
+				<textFieldExpression><![CDATA["BAKIJEV REPORT"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="63875704-d671-4670-8ffe-9e8606c361f8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="44b4bbbb-e0b7-486b-aad2-ef5205b5db88"/>
+				</reportElement>
+				<text><![CDATA[NIM_OPIS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="30" uuid="69452fe7-68cd-4446-9f77-56d15388cc9b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dad8b4f1-78d9-4806-8251-a44a3c011c91"/>
+				</reportElement>
+				<text><![CDATA[NIM_ADRESA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="30" uuid="3dfedf81-a2e1-43e9-b383-5d8d8942a16e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de28798c-b902-41ed-90bf-8821dd7a9ea1"/>
+				</reportElement>
+				<text><![CDATA[NM_NAZIV]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="100" height="30" uuid="65cbc024-c7f2-49dd-a3a5-b4bde23fa82c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="44b4bbbb-e0b7-486b-aad2-ef5205b5db88"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{NIM_OPIS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="10" width="100" height="30" uuid="016147f6-aa55-49a0-aea5-7da91b768eb7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dad8b4f1-78d9-4806-8251-a44a3c011c91"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{NIM_ADRESA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="10" width="100" height="30" uuid="6331ed4d-3b20-4a9c-a1cc-bc93a605d5d9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de28798c-b902-41ed-90bf-8821dd7a9ea1"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{NM_NAZIV}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="76" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="0" y="30" width="100" height="30" uuid="2c46c710-4676-48d5-92d3-bee4470098d1"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="30" width="100" height="30" uuid="28320bf5-7863-4b04-9852-3cece6ce70a1"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,196 @@
+package controller.state;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+import main.MainFrame;
+import modeli.Atribut;
+import modeli.Entitet;
+import modeli.InformacioniResurs;
+import modeli.Paket;
+import modeli.Relacija;
+import modeli.Tabela;
+import modeli.Workspace;
+
+public class RelacijaStateAction implements ActionListener {
+	private JTable tabela;
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		MainFrame.getInstance().getTrenutniEntitet().getStateManager().setRelacijaState();
+		MainFrame.getInstance().getTrenutnaTabela().addMouseListener(new FieldSelected());
+		// ocisti prethodne tabove da ne bi bilo duplikata
+		MainFrame.getInstance().getDonjiTabovi().removeAll();
+
+		// nalazi odgovarajuce entitete koje treba iscrtati u donjoj tabeli
+		String odabrani;
+		String odabrani2;
+		int selectedRow = MainFrame.getInstance().getTrenutnaTabela().getSelectedRow();
+		if (selectedRow >= 0) {
+			if (MainFrame.getInstance().getGornjiTabovi().getSelectedIndex() >= 0) {
+				odabrani = MainFrame.getInstance().getGornjiTabovi()
+						.getTitleAt(MainFrame.getInstance().getGornjiTabovi().getSelectedIndex());
+				odabrani2 = odabrani.substring(0, odabrani.indexOf(":"));
+				odabrani = odabrani.substring(odabrani.indexOf(":") + 1);
+				Entitet trenutni = MainFrame.getInstance().getTrenutniEntitet();
+				Paket pp = trenutni.getEntPaket();
+				String trazeniAtt = "";
+				boolean check = true;
+				for (Relacija rel : trenutni.getRelacije()) {
+					for (int i = 0; i < MainFrame.getInstance().getTrenutniEntitet().getChildCount(); i++) {
+						if (check && rel.getAtribut1()
+								.equals(((String) MainFrame.getInstance().getTrenutnaTabela().getColumnName(i)))) {
+							trazeniAtt = ((String) MainFrame.getInstance().getTrenutnaTabela().getValueAt(selectedRow,
+									i)).trim();
+							check = false;
+						}
+					}
+				}
+				for (Relacija rel : trenutni.getRelacije()) {
+					for (Entitet ent : pp.getEntiteti()) {
+						if (rel.getEntitet().equals(ent.getName())) {
+							if (pp.getNaziv().equals("paket")) {
+								Statement stmt;
+								try {
+									ArrayList<String[]> lista = new ArrayList<>();
+									stmt = MainFrame.getConnection().createStatement();
+									System.out.println("SELECT * FROM " + ent.getName() + " WHERE "
+											+ rel.getAtribut1() + "='" + trazeniAtt + "'");
+									ResultSet rs = stmt.executeQuery("SELECT * FROM " + ent.getName() + " WHERE "
+											+ rel.getAtribut1() + "='" + trazeniAtt + "'");
+									while (rs.next()) {
+										String[] niz = new String[ent.getChildCount()];
+										for (int i = 0; i < ent.getChildCount(); i++) {
+											niz[i] = rs.getString(i + 1);
+										}
+										lista.add(niz);
+									}
+									if (lista.size() > 0) {
+										Object[][] podaci = new Object[lista.size()][lista.get(0).length];
+										for (int i = 0; i < lista.size(); i++)
+											for (int j = 0; j < lista.get(0).length; j++) {
+												podaci[i][j] = lista.get(i)[j];
+											}
+										int t = ent.getChildCount();
+										Object[] heder = new Object[t];
+										for (int k = 0; k < t; k++) {
+											Atribut aa = (Atribut) ent.getChildAt(k);
+											String s = aa.getName();
+											Object p = s;
+											heder[k] = p;
+										}
+										JPanel panel = new JPanel();
+										BorderLayout bl = new BorderLayout();
+										panel.setLayout(bl);
+										tabela = new JTable(podaci, heder);
+										tabela.getTableHeader();
+										panel.add(tabela);
+										JScrollPane scroll = new JScrollPane(tabela);
+										Dimension screenSize = MainFrame.getInstance().getGornji().getSize();
+										scroll.setPreferredSize(screenSize);
+										scroll.setMaximumSize(screenSize);
+										scroll.setMinimumSize(screenSize);
+										tabela.setFillsViewportHeight(true);
+										panel.add(scroll);
+										MainFrame.getInstance().getDonjiTabovi().addTab(
+												MainFrame.getInstance().getTrenutniEntitet().getEntPaket().getNaziv()
+														+ ":" + ent.getName(),
+												panel);
+									}
+
+								} catch (SQLException e) {
+									e.printStackTrace();
+								}
+
+							} else
+								try {
+									RandomAccessFile afile = new RandomAccessFile(ent.getPath(), "r");
+									int duzinaReda = afile.readLine().length();
+									ArrayList<String[]> lista = new ArrayList<>();
+									int cnt = 0;
+									boolean prviProlaz = true;
+									boolean upisano = false;
+									afile.seek(0);
+									while (true) {
+										if (!prviProlaz)
+											afile.seek(afile.getFilePointer() + 2 + duzinaReda);
+										if (afile.getFilePointer() >= afile.length())
+											break;
+										String red = afile.readLine();
+										int pocetak = 0;
+										String[] niz = new String[ent.getChildCount()];
+										for (int j = 0; j < ent.getChildCount(); j++) {
+											int kraj = pocetak + ent.getAtributi().get(j).getDuzina();
+											if (kraj < red.length())
+												niz[j] = red.substring(pocetak, kraj);
+											else
+												niz[j] = red.substring(pocetak, red.length());
+											if ((niz[j].trim()).equals(trazeniAtt)) {
+												upisano = true;
+											}
+											pocetak = kraj;
+										}
+										if (upisano) {
+											lista.add(niz);
+										}
+										upisano = false;
+										prviProlaz = false;
+									}
+									int t = ent.getChildCount();
+									Object[][] podaci = new Object[lista.size()][t];
+									for (int i = 0; i < lista.size(); i++)
+										for (int j = 0; j < t; j++) {
+											podaci[i][j] = lista.get(i)[j];
+										}
+									Object[] heder = new Object[t];
+									for (int k = 0; k < t; k++) {
+										Atribut aa = (Atribut) ent.getChildAt(k);
+										String s = aa.getName();
+										Object p = s;
+										heder[k] = p;
+									}
+									JPanel panel = new JPanel();
+									BorderLayout bl = new BorderLayout();
+									panel.setLayout(bl);
+									tabela = new JTable(podaci, heder);
+									tabela.getTableHeader();
+									panel.add(tabela);
+									JScrollPane scroll = new JScrollPane(tabela);
+									Dimension screenSize = MainFrame.getInstance().getGornji().getSize();
+									scroll.setPreferredSize(screenSize);
+									scroll.setMaximumSize(screenSize);
+									scroll.setMinimumSize(screenSize);
+									tabela.setFillsViewportHeight(true);
+									panel.add(scroll);
+									MainFrame.getInstance().getDonjiTabovi().addTab(
+											MainFrame.getInstance().getTrenutniEntitet().getEntPaket().getNaziv() + ":"
+													+ ent.getName(),
+											panel);
+								} catch (FileNotFoundException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								} catch (IOException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+						}
+					}
+				}
+			}
+		}
+	}
+
+}

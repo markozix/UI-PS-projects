@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="nina" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="12cfa186-6dbd-4247-90c7-11ab87d4da91">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="nina1"/>
+	<parameter name="nina1" class="java.lang.String"/>
+	<parameter name="nina2" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[select NASELJENO_MESTO.NM_NAZIV
+from SADRZI_NASELJA
+
+inner join NASELJENO_MESTO on NASELJENO_MESTO.DR_IDENTIFIKATOR = SADRZI_NASELJA.DR_IDENTIFIKATOR and
+NASELJENO_MESTO.NM_IDENTIFIKATOR = SADRZI_NASELJA.NM_IDENTIFIKATOR
+
+inner join REGIONI on REGIONI.REG_IDENTIFIKATOR = SADRZI_NASELJA.REG_IDENTIFIKATOR and 
+REGIONI.TR_ID = SADRZI_NASELJA.TR_ID
+
+where REGIONI.TR_ID =  $P{nina1} 
+and REGIONI.REG_IDENTIFIKATOR =  $P{nina2} ]]>
+	</queryString>
+	<field name="NM_NAZIV" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NM_NAZIV"/>
+	</field>
+	<variable name="NM_NAZIV1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{NM_NAZIV}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="550" height="79" uuid="7a520a7c-990f-47b2-b1c8-3996e0063b56"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NINA REPORT"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="30" uuid="05c9461b-0d1d-4dd1-b3d6-c4410e3888d2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cda8d09a-0bea-42a8-beec-335e5e91a9e9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NM_NAZIV]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="550" height="30" uuid="488d83fe-6d35-4fdc-96a3-fd47bd9ddf96">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cda8d09a-0bea-42a8-beec-335e5e91a9e9"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NM_NAZIV}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="0" y="0" width="100" height="30" uuid="e1430145-ffba-4086-a8e8-6ca4717f985d"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="100" height="30" uuid="f517f9e5-2d0e-422d-b61c-2c68b0d74d33"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

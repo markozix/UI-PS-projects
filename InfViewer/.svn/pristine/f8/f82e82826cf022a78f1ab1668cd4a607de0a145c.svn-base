@@ -1,0 +1,61 @@
+package controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+
+import org.json.JSONObject;
+
+import com.cedarsoftware.util.io.JsonWriter;
+
+import metaSema.EditorMetaSeme;
+import metaSema.IzaberiEntitetBrisanje;
+import modeli.Atribut;
+import modeli.Entitet;
+import modeli.InformacioniResurs;
+import modeli.Relacija;
+
+public class IzaberiEntitetBrisanjeAkcija implements ActionListener {
+
+	private IzaberiEntitetBrisanje dialog;
+	
+	public IzaberiEntitetBrisanjeAkcija(IzaberiEntitetBrisanje dialog) {
+		this.dialog = dialog;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Entitet enti = dialog.getLista().getSelectedValue();
+		InformacioniResurs resurs = EditorMetaSeme.getInstance().getResurs();
+		resurs.remove(enti);
+		JSONObject sema = new JSONObject();
+		sema.put("name", resurs.getNaziv());
+		for(int i = 0; i < resurs.getChildCount(); i++) {
+			Entitet ent = (Entitet)resurs.getChildAt(i);
+			JSONObject entitet = new JSONObject();
+			entitet.put("name", ent.getName());
+			for(int j = 0; j < ent.getChildCount(); j++) {
+				Atribut atr = (Atribut)ent.getChildAt(j);
+				JSONObject atribu = new JSONObject()
+						.put("name", atr.getName())
+						.put("isKey", atr.isKey())
+						.put("length", atr.getDuzina())
+						.put("type", atr.getType())
+						.put("required", atr.isRequired());
+				entitet.append("atributes", atribu);
+			}
+			for(int j = 0; j < ent.getRelacije().size(); j++) {
+				Relacija rel = (Relacija)ent.getRelacije().get(j);
+				JSONObject relacija = new JSONObject()
+						.put("atribut1", rel.getAtribut1())
+						.put("atribut2", rel.getAtribut2())
+						.put("entitet", rel.getEntitet());
+				entitet.append("relations", relacija);
+			}
+			sema.append("entities", entitet);
+		}
+		EditorMetaSeme.getInstance().getTa().setText(JsonWriter.formatJson(sema.toString()));
+		dialog.dispatchEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSING));
+	}
+
+}

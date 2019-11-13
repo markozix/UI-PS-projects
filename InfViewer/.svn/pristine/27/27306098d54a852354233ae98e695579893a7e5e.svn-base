@@ -1,0 +1,39 @@
+package main;
+
+import java.awt.Dimension;
+
+import javax.swing.JButton;
+import javax.swing.JToolBar;
+
+import controller.Export;
+import controller.Import;
+import controller.OtvoriEditor;
+
+public class MyToolBar extends JToolBar {
+
+	public MyToolBar() {
+		JButton editor = new JButton("Editor");
+		JButton navigacija = new JButton("Navigation");
+		JButton dodaj = new JButton("Add");
+		JButton izbrisi = new JButton("Delete");
+		JButton update = new JButton("Update");
+		JButton pretrazi = new JButton("Search");
+		JButton export = new JButton("Export");
+		JButton importovanje = new JButton("Import");
+		
+		editor.addActionListener(new OtvoriEditor());
+		export.addActionListener(new Export());
+		importovanje.addActionListener(new Import());
+		
+		add(navigacija);
+		add(editor);
+		addSeparator(new Dimension(5,5));
+		add(dodaj);
+		add(izbrisi);
+		add(update);
+		add(pretrazi);
+		add(export);
+		add(importovanje);
+		setFloatable(false);
+	}
+}

@@ -1,0 +1,84 @@
+package state;
+
+import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.RandomAccessFile;
+
+import main.MainFrame;
+import modeli.Atribut;
+
+public class AddState extends State {
+
+	@Override
+	public void pressButton(ActionEvent e) {
+		if(MainFrame.getInstance().getTrenutniEntitet().getEntPaket().toString().equals("Serijski")) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("\r\n");
+			for(int i = 0; i < MainFrame.getInstance().getTrenutniEntitet().getChildCount(); i++) {
+				String str = MainFrame.getInstance().getLista().get(i).getText();
+				Atribut atr = (Atribut)MainFrame.getInstance().getTrenutniEntitet().getChildAt(i);
+				int len = atr.getDuzina();
+				sb.append(str);
+				if(str.length() == len) {
+					
+				} else {
+					for(int j = 0; j < len - str.length(); j++) {
+						sb.append(" ");
+					}
+				}
+			}
+			sb.append("0");
+			try {
+				RandomAccessFile afile = new RandomAccessFile(MainFrame.getInstance().getTrenutniEntitet().getPath(), "rw");
+				afile.seek(afile.length());
+				afile.writeBytes(sb.toString());
+				afile.setLength(afile.length());
+				afile.close();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} else {
+			String fileName = MainFrame.getInstance().getTrenutniEntitet().getEntPaket().getNaziv() + "-"
+					+ MainFrame.getInstance().getTrenutniEntitet().getName() + ".dtp";
+			File datotekaPromena = new File(fileName);
+			StringBuilder sb = new StringBuilder();
+			for(int i = 0; i < MainFrame.getInstance().getTrenutniEntitet().getChildCount(); i++) {
+				String str = MainFrame.getInstance().getLista().get(i).getText();
+				Atribut atr = (Atribut)MainFrame.getInstance().getTrenutniEntitet().getChildAt(i);
+				int len = atr.getDuzina();
+				sb.append(str);
+				if(str.length() == len) {
+					
+				} else {
+					for(int j = 0; j < len - str.length(); j++) {
+						sb.append(" ");
+					}
+				}
+			}
+			sb.append("A");
+			try {
+				FileWriter fw = new FileWriter(fileName, true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter pw = new PrintWriter(bw);
+				pw.println(sb.toString());
+				pw.close();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return "Add";
+	}
+}

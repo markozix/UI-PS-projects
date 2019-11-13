@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="src/" kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="Resources/commons-lang3-3.7.jar"/>
+	<classpathentry kind="lib" path="Resources/jtds-1.3.1.jar"/>
+	<classpathentry kind="lib" path="Resources/commons-beanutils-1.8.0.jar"/>
+	<classpathentry kind="lib" path="Resources/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="Resources/commons-digester-1.7.jar"/>
+	<classpathentry kind="lib" path="Resources/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="Resources/jcommon-1.0.15.jar"/>
+	<classpathentry kind="lib" path="Resources/jfreechart-1.0.12.jar"/>
+	<classpathentry kind="lib" path="Resources/jasperreports-6.6.0.jar"/>
+	<classpathentry kind="lib" path="Resources/jasper-compiler-jdt.jar"/>
+	<classpathentry kind="lib" path="Resources/iText-2.1.7.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

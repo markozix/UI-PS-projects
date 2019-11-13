@@ -1,0 +1,109 @@
+package controller;
+
+import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+
+import main.MainFrame;
+import modeli.Atribut;
+import modeli.Entitet;
+import modeli.InformacioniResurs;
+import modeli.Relacija;
+import modeli.Tabela;
+
+public class OtvoriEntIRel implements MouseListener {
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			if (e.getClickCount() == 2) {
+				if (MainFrame.getInstance().getTree().getLastSelectedPathComponent() instanceof Entitet) {
+					Object o = MainFrame.getInstance().getTree().getLastSelectedPathComponent();
+					Entitet trenutni = (Entitet) o;
+					String nazivTaba = trenutni.getName();
+
+					// provera da li je odabrani entitet vec otvoren, ako jeste,
+					// otvori taj tab
+					int brojTabova = MainFrame.getInstance().getGornjiTabovi().getTabCount();
+					for (int i = 0; i < brojTabova; i++) {
+						if (MainFrame.getInstance().getGornjiTabovi().getTitleAt(i).equals(nazivTaba)) {
+							MainFrame.getInstance().getGornjiTabovi().setSelectedIndex(i);
+							//donjiDeo(trenutni);
+							return;
+						}
+					}
+
+					// broj atributa
+					int t = ((Entitet) o).getChildCount();
+
+					// lista objekata za kolone, dajemo joj duzinu t koja
+					// odgovara broju atributa
+					Object[] lista = new Object[t];
+
+					// petlja da procita atribute i stavi u kolone
+					for (int k = 0; k < t; k++) {
+
+						Object o2 = ((Entitet) o).getChildAt(k);
+						String s = ((Atribut) o2).getName();
+						Object p = s;
+						lista[k] = p;
+
+					}
+
+					// ubacen scroll pane zbog pozivanja kolona tabele
+
+					JTable tabela = new JTable(new Tabela(null, lista));
+					tabela.getTableHeader();
+					JScrollPane scroll = new JScrollPane(tabela);
+					Dimension screenSize = MainFrame.getInstance().getGornji().getSize();
+					scroll.setPreferredSize(screenSize);
+					scroll.setMaximumSize(screenSize);
+					scroll.setMinimumSize(screenSize);
+
+					// da se doda bijela pozadina tabele da bi se razlikovala od
+					// ostatka
+					tabela.setFillsViewportHeight(true);
+
+					// naziv taba, isti kao entitet da bih mogao da sprecim
+					// otvaranje dva puta istog entiteta
+					MainFrame.getInstance().getGornjiTabovi().addTab(nazivTaba, scroll);
+					MainFrame.getInstance().getGornjiTabovi()
+							.setSelectedIndex(MainFrame.getInstance().getGornjiTabovi().getTabCount() - 1);
+				}
+			}
+		}
+
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

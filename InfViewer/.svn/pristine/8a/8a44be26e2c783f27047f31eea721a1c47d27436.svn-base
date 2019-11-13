@@ -1,0 +1,69 @@
+package main;
+
+import java.awt.Dimension;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+
+import controller.state.AddStateAction;
+
+public class ToolBarIznadTabele extends JToolBar {
+
+	int br = 0;
+	
+	public ToolBarIznadTabele() {
+
+	
+	JLabel blockFactor = new JLabel("f(block factor): ");
+	JTextField blockTf = new JTextField();
+	//podesiti tf duzinu
+	blockTf.setMaximumSize(new Dimension(50, 25));
+	JButton changeF = new JButton("Change f");
+	JButton btnFetch = new JButton("Fetch next block");
+	JButton dodaj = new JButton("Add");
+	JButton izbrisi = new JButton("Delete");
+	JButton update = new JButton("Update");
+	JButton pretrazi = new JButton("Search");
+	JButton btnDetail = new JButton("Detail");
+	JButton brnRelation = new JButton("Relation");
+	JLabel brojac = new JLabel(""+br);
+	
+	//state akcije
+	dodaj.addActionListener(new AddStateAction());
+	
+	
+	add(blockFactor);
+	add(blockTf);
+	add(changeF);
+	addSeparator();
+	add(btnFetch);
+	add(dodaj);
+	add(izbrisi);
+	add(update);
+	add(pretrazi);
+	add(brnRelation);
+	add(btnDetail);
+	addSeparator();
+	add(brojac);
+	setFloatable(false);
+	
+	
+	
+	
+	
+	
+	}
+
+	public int getBr() {
+		return br;
+	}
+
+	public void setBr(int br) {
+		this.br = br;
+	}
+	
+	
+	
+}

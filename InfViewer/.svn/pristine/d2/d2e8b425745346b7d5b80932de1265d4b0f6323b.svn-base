@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MarkoReport" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ca995c83-a48f-455c-aef4-8bfe603e26e0">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="polje1" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[		SELECT l.OJ_NAZIV, l.BROJ
+FROM	(SELECT  COUNT(PS_IDENTIFIKATOR) AS 'BROJ', w.PS_IDENTIFIKATOR, w.OJ_NAZIV
+		FROM	(SELECT o.OJ_NAZIV, p.NIM_IDENTIFIKATOR, o.PS_IDENTIFIKATOR
+				FROM ORGANIZACIONE_JEDINICE AS o JOIN PROSTORIJE AS p
+				ON o.PS_IDENTIFIKATOR = p.PS_IDENTIFIKATOR) AS w
+		GROUP BY w.PS_IDENTIFIKATOR, w.OJ_NAZIV, w.PS_IDENTIFIKATOR) as l
+WHERE l.BROJ > 2 AND  l.PS_IDENTIFIKATOR=10;]]>
+	</queryString>
+	<field name="OJ_NAZIV" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OJ_NAZIV"/>
+	</field>
+	<field name="BROJ" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="BROJ"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="230" y="24" width="100" height="30" uuid="5ac1c1e2-4810-4c04-a717-9694e7fffea3"/>
+				<textFieldExpression><![CDATA["Vukicevic REPORT"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="99" y="0" width="100" height="30" uuid="5840316d-157a-44b3-9d03-3d973366a1f4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3dc587f8-6f7c-40ef-b02a-cb4f17a6fcc7"/>
+				</reportElement>
+				<text><![CDATA[OJ_NAZIV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="0" width="100" height="30" uuid="5161b539-ab5d-4c06-99f5-4ff28a850d42">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f367705a-ea8a-4469-ab35-bf31828c0d91"/>
+				</reportElement>
+				<text><![CDATA[BROJ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="99" y="32" width="100" height="30" uuid="76bdd81f-44bd-485f-9bc8-1f90901bf295">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3dc587f8-6f7c-40ef-b02a-cb4f17a6fcc7"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{OJ_NAZIV}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="30" width="100" height="30" uuid="468619b1-9a8a-4d72-919d-44e93e1aaba1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f367705a-ea8a-4469-ab35-bf31828c0d91"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{BROJ}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="100" y="0" width="100" height="30" uuid="c5eb77fa-e108-4b60-9af9-43c7687b4398"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="0" width="100" height="30" uuid="19fde648-333b-4f04-8cda-d72de1ac71b0"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

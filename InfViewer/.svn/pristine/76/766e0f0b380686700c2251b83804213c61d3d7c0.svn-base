@@ -1,0 +1,114 @@
+package modeli;
+
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashSet;
+
+import javax.swing.tree.TreeNode;
+
+public class Entitet extends InformacioniResurs {
+//	private InformacioniResurs parent;
+	private String name;
+	private ArrayList<Atribut> atributi = new ArrayList<>();
+	private ArrayList<Relacija> relacije = new ArrayList<>();
+//	private HashSet<Tabela> tabela;
+	
+	@Override
+	public Enumeration children() {
+		return (Enumeration<Atribut>) atributi;
+	}
+	
+	@Override
+	public TreeNode getChildAt(int childIndex) {
+		return atributi.get(childIndex);
+	}
+	
+	@Override
+	public int getChildCount() {
+		return atributi.size();
+	}
+	
+	@Override
+	public int getIndex(TreeNode node) {
+		return atributi.indexOf((Atribut)node);
+	}
+	
+	@Override
+	public TreeNode getParent() {
+		return null;
+	}
+	@Override
+	public boolean isLeaf() {
+		return false;
+	}
+	
+	@Override
+	public void add(Object dete) {
+		if(dete instanceof Atribut) {
+			atributi.add((Atribut)dete);
+		}
+	}
+	
+	@Override
+	public void remove(Object dete) {
+		if(dete instanceof Atribut) {
+			atributi.remove((Atribut)dete);
+		}
+	}
+	
+	public ArrayList<Relacija> getRelacije() {
+		return relacije;
+	}
+
+	public void setRelacije(ArrayList<Relacija> relacije) {
+		this.relacije = relacije;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	@Override
+		public String toString() {
+			return name;
+		}
+	
+//	 public void addAtribut(Atribut newAtribut) {
+//	      if (newAtribut == null)
+//	         return;
+//	      if (this.atribut == null)
+//	         this.atribut = new java.util.ArrayList<Atribut>();
+//	      if (!this.atribut.contains(newAtribut))
+//	         this.atribut.add(newAtribut);
+//	   }
+//	 
+//	 public void removeAtribut(Atribut oldAtribut) {
+//	      if (oldAtribut == null)
+//	         return;
+//	      if (this.atribut != null)
+//	         if (this.atribut.contains(oldAtribut))
+//	            this.atribut.remove(oldAtribut);
+//	   }
+//	 
+//	 public void addTabela(Tabela newTabela) {
+//	      if (newTabela == null)
+//	         return;
+//	      if (this.tabela == null)
+//	         this.tabela = new java.util.HashSet<Tabela>();
+//	      if (!this.tabela.contains(newTabela))
+//	         this.tabela.add(newTabela);
+//	   }
+//	 
+//	 public void removeTabela(Tabela oldTabela) {
+//	      if (oldTabela == null)
+//	         return;
+//	      if (this.tabela != null)
+//	         if (this.tabela.contains(oldTabela))
+//	            this.tabela.remove(oldTabela);
+//	   }
+	   
+ }

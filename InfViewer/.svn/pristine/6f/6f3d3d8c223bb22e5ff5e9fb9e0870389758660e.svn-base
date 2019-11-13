@@ -1,0 +1,68 @@
+package controller.state;
+
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
+import main.MainFrame;
+import modeli.Atribut;
+
+public class AddStateAction implements ActionListener {
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		MainFrame.getInstance().getTrenutniEntitet().getStateManager().setAddState();
+		
+		JPanel pan = new JPanel();
+		JPanel panel = new JPanel();
+		int i = MainFrame.getInstance().getTrenutniEntitet().getAtributi().size();
+		GridLayout grid = new GridLayout(i,1);
+		//velicina grida
+		grid.preferredLayoutSize(panel);
+		panel.setLayout(grid);
+		
+		for(Atribut a : MainFrame.getInstance().getTrenutniEntitet().getAtributi()) {
+			JLabel labela = new JLabel(a.getName());
+			JTextField tf = new JTextField();
+			tf.setMinimumSize(new Dimension(50, 15));
+			
+			panel.add(labela);
+			panel.add(tf);
+		}
+		
+		JButton btnAdd = new JButton("Dodaj");
+		//panel.add(btnAdd);
+		
+		panel.add(btnAdd);
+		Dimension screenSize = MainFrame.getInstance().getDonji().getSize();
+		//scroll.setPreferredSize(screenSize);
+		//scroll.setMaximumSize(screenSize);
+		//scroll.setMinimumSize(screenSize);
+	
+		
+		MainFrame.getInstance().getDonjiTabovi().add(MainFrame.getInstance().getTrenutniEntitet().getName(), panel);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+
+}

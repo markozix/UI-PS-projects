@@ -1,0 +1,20 @@
+package state;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+
+public class RelacijaState extends State {
+
+	@Override
+	public void selectedField() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pressButton(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,67 @@
+package metaSema;
+
+import java.awt.BorderLayout;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+import controller.PotvrdiPaket;
+import modeli.InformacioniResurs;
+import modeli.Paket;
+
+public class PaketDialog extends JDialog {
+
+	private JList<Paket> lista;
+	private DefaultListModel<Paket> model;
+	
+	public PaketDialog() {
+		model = new DefaultListModel<>();
+		lista = new JList<>(model);
+		setTitle("Izaberite paket koji dodajete");
+		setSize(300, 300);
+		setLocationRelativeTo(null);
+		setVisible(true);
+		
+		JScrollPane pane = new JScrollPane(lista);
+		JButton dugme = new JButton("Izaberi");
+		InformacioniResurs resurs = EditorMetaSeme.getInstance().getResurs();
+		Paket p = new Paket();
+		Paket p1 = new Paket();
+		Paket p2 = new Paket();
+		p.setNaziv("Serijski");
+		p1.setNaziv("Sekvencijalni");
+		p2.setNaziv("Indeks-Sekvencijalni");
+		model.addElement(p);
+		model.addElement(p1);
+		model.addElement(p2);
+		dugme.addActionListener(new PotvrdiPaket(this));
+		add(pane, BorderLayout.NORTH);
+		add(dugme, BorderLayout.SOUTH);
+	}
+
+	public JList<Paket> getLista() {
+		return lista;
+	}
+
+	public void setLista(JList<Paket> lista) {
+		this.lista = lista;
+	}
+
+	public DefaultListModel<Paket> getModel() {
+		return model;
+	}
+
+	public void setModel(DefaultListModel<Paket> model) {
+		this.model = model;
+	}
+	
+}

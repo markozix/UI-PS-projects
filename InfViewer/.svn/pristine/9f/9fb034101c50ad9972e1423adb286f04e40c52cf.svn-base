@@ -1,0 +1,8 @@
+package state;
+
+public class State {
+
+	public void selectedField(){};
+	public void pressButton(){};
+	public void pressButtonMerge(){};
+}

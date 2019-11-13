@@ -1,0 +1,33 @@
+package main;
+
+import java.awt.Dimension;
+
+import javax.swing.JButton;
+import javax.swing.JToolBar;
+
+import controller.ConnectSQL;
+import controller.Export;
+import controller.Import;
+import controller.OtvoriEditor;
+
+public class MyToolBar extends JToolBar {
+
+	public MyToolBar() {
+		JButton editor = new JButton("Editor");
+		JButton export = new JButton("Export");
+		JButton importovanje = new JButton("Import");
+		JButton konekt = new JButton("Connect");
+		
+		editor.addActionListener(new OtvoriEditor());
+		export.addActionListener(new Export());
+		importovanje.addActionListener(new Import());
+		konekt.addActionListener(new ConnectSQL());
+		
+		add(editor);
+		addSeparator(new Dimension(5,5));
+		add(export);
+		add(importovanje);
+		add(konekt);
+		setFloatable(false);
+	}
+}

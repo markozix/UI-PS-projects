@@ -1,0 +1,46 @@
+package state;
+
+import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
+import main.MainFrame;
+import modeli.Atribut;
+
+public class AddState extends State {
+
+	@Override
+	public void pressButton(ActionEvent e) {
+		System.out.println(MainFrame.getInstance().getTrenutniEntitet().getName());
+		StringBuilder sb = new StringBuilder();
+		sb.append("\r\n");
+		for(int i = 0; i < MainFrame.getInstance().getTrenutniEntitet().getChildCount(); i++) {
+			String str = MainFrame.getInstance().getLista().get(i).getText();
+			Atribut atr = (Atribut)MainFrame.getInstance().getTrenutniEntitet().getChildAt(i);
+			int len = atr.getDuzina();
+			sb.append(str);
+			if(str.length() == len) {
+				
+			} else {
+				for(int j = 0; j < len - str.length(); j++) {
+					sb.append(" ");
+				}
+			}
+		}
+		sb.append("0");
+		try {
+			RandomAccessFile afile = new RandomAccessFile(MainFrame.getInstance().getTrenutniEntitet().getPath(), "rw");
+			System.out.println(MainFrame.getInstance().getTrenutniEntitet().getPath());
+			afile.seek(afile.length());
+			afile.writeBytes(sb.toString());
+			afile.setLength(afile.length());
+			afile.close();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+
+}
